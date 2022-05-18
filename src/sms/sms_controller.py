@@ -1,6 +1,9 @@
 from flask_restx import Namespace, Resource
 from flask import request
 from src.sms.sms_dto import process_sms_dto
+from src.sms.processors.first_bank import first_bank_processor
+
+
 sms_namespace = Namespace('Sms', 'SMS Module')
 
 
@@ -11,4 +14,6 @@ class ProcessSms(Resource):
     @sms_namespace.expect(process_sms_dto(sms_namespace))
     def post(self):
         payload = request.json
-        return payload
+        message = payload['message']
+        data = first_bank_processor(message)
+        return data
