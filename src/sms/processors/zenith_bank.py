@@ -7,7 +7,7 @@ def zenith_bank_processor(message: str):
     # Fetch Transaction Type
     transaction_type = re.findall(r'(CR|DR) Amt', message)
     transaction_type = transaction_type[0]
-    transaction_type = 'credit' if transaction_type is 'CR' else 'debit'
+    transaction_type = 'credit' if transaction_type == 'CR' else 'debit'
 
     # Fetch account number
     account_number = re.findall(r'Acct:\w+[.*]+\d+\w', message)
