@@ -5,7 +5,7 @@ def uba_processor(message: str):
     """Processes UBA SMS"""
 
     # Fetch Transaction Type
-    transaction_type = re.findall(r'Txn: Credit|Debit', message)
+    transaction_type = re.findall(r'Txn: Credit|Txn: Debit', message)
     transaction_type = transaction_type[0]
     transaction_type = transaction_type[len('Txn: '):]
     transaction_type = transaction_type.lower()
