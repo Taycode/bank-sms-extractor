@@ -1,37 +1,36 @@
 import re
 
 
-def Wema_bank_processor(message: str):
+def wema_bank_processor(message: str):
     """Processes Wema SMS"""
 
-    #Fetch Transaction Type
+    # Fetch Transaction Type
     transaction_type = re.findall(r'Credit|Debit', message)
     transaction_type = transaction_type[0]
 
-    #Fetch account number
+    # Fetch account number
     account_number = re.findall(r'Acct No:\w+[.*]+\d+\w', message)
     account_number = account_number[0]
     account_number = account_number[len('Acct No:'):]
 
-    #Fetch Description
+    # Fetch Description
     description = re.findall(r'Desc.:*?(?:(?!\r).)*', message)
     description = description[0]
     description = description[len('Desc.: '):]
 
-    #Fetch Amount
+    # Fetch Amount
     amount = re.findall(r'.*NGN[\d+,]+.\d+', message)
     amount = amount[0]
     amount = amount[len('NGN'):]
 
-    #Fetch Date
+    # Fetch Date
     date = re.findall(r'.*\d{2}-\d{2}-\d{4} \d+:\d+', message)
     date = date[0]
     
-    #Fetch Balance
+    # Fetch Balance
     balance = re.findall(r'Bal: [\d+,]+.\d+', message)
     balance = balance[0]
     balance = balance[len('Bal: '):]
-
 
     return {
         'description': description,
