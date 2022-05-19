@@ -7,6 +7,7 @@ def keystone_bank_processor(message: str):
     # Fetch Transaction Type
     transaction_type = re.findall(r'Debit|Credit', message)
     transaction_type = transaction_type[0]
+    transaction_type = transaction_type.lower()
 
     # Fetch account number
     account_number = re.findall(r'Acct:\w+[*]+\d+', message)

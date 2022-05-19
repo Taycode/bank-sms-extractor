@@ -1,8 +1,7 @@
 from flask_restx import Namespace, Resource
 from flask import request
 from src.sms.sms_dto import process_sms_dto
-from src.sms.processors.first_bank import first_bank_processor
-from src.sms.processors import bank_processors
+from src.sms.sms_util import process_bank_sms, remove_comma_from_number
 
 
 sms_namespace = Namespace('Sms', 'SMS Module')
@@ -15,10 +14,9 @@ class ProcessSms(Resource):
     @sms_namespace.expect(process_sms_dto(sms_namespace))
     def post(self):
         payload = request.json
-        message = payload['message']
-        sender = payload['sender']
-        processor = bank_processors.get(sender)
-        if not processor:
-            return {'message': 'Not a bank'}, 400
-        data = processor(message)
-        return data
+        result = list(map(process_bank_sms, payload))
+        result = list(map(
+            lambda x: {**x, 'amount': remove_comma_from_number(x['amount'])},
+            result
+        ))
+        return result

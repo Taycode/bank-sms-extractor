@@ -7,6 +7,8 @@ def uba_processor(message: str):
     # Fetch Transaction Type
     transaction_type = re.findall(r'Txn: Credit|Debit', message)
     transaction_type = transaction_type[0]
+    transaction_type = transaction_type[len('Txn: '):]
+    transaction_type = transaction_type.lower()
 
     # Fetch account number
     account_number = re.findall(r'Ac:\w+[.*]+\d+\w', message)

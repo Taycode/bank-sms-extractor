@@ -7,6 +7,7 @@ def access_bank_processor(message :str):
     # Fetch transaction type
     transaction_type = re.findall(r'Credit|Debit', message)
     transaction_type = transaction_type[0]
+    transaction_type = transaction_type.lower()
 
     # Fetch account number
     account_number = re.findall(r'Acc:\w+[*]+\d+', message)
