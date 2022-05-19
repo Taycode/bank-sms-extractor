@@ -9,7 +9,7 @@ def zenith_bank_processor(message: str):
     transaction_type = transaction_type[0]
 
     # Fetch account number
-    account_number = re.findall(r'Acct:\w+[.*]+\d+\w'')', message)
+    account_number = re.findall(r'Acct:\w+[.*]+\d+\w', message)
     account_number = account_number[0]
     account_number = account_number[len('Acct:'):]
 
@@ -30,7 +30,6 @@ def zenith_bank_processor(message: str):
     balance = re.findall(r'Bal:[\d+,]+.\d+', message)
     balance = balance[0]
     balance = balance[len('Bal:'):]
-
 
     return {
         'description': description,
